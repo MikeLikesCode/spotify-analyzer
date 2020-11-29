@@ -87,7 +87,7 @@ if (!dev && cluster.isMaster) {
         res.cookie(stateKey, state);
     
         // your application requests authorization
-        const scope = 'user-read-private user-read-email user-top-read playlist-modify-private user-read-recently-played';
+        const scope = 'user-read-private user-read-email user-top-read playlist-modify-private user-read-recently-played user-follow-modify';
         
         res.redirect('https://accounts.spotify.com/authorize?' +
           querystring.stringify({
@@ -248,6 +248,7 @@ if (!dev && cluster.isMaster) {
 
       })
 
+
       // GET user's profile
       server.get('/api/profile', async function(req, res){
         const refresh_token = req.query.refresh_token;
@@ -316,6 +317,28 @@ if (!dev && cluster.isMaster) {
 
       })
 
+      server.put('/api/followArtist', async function(req, res){
+
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        const getTrack = async (accessToken) => {
+          const options = {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            url: `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`
+          }
+          const response = await axios(options)
+         
+          console.log(response)
+          
+        }
+
+        const access_token = await getAccessToken(refresh_token)
+        const track = await getTrack(access_token)
+        res.json(track)
+
+      })
+
       server.get('/api/artist', async function(req, res){
 
         const refresh_token = req.query.refresh_token;
@@ -357,6 +380,28 @@ if (!dev && cluster.isMaster) {
         const access_token = await getAccessToken(refresh_token)
         const artist = await getRA(access_token)
         res.json(artist)
+
+      })
+
+      server.get('/api/isFollowing', async function(req, res){
+
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        const getFollowing = async (accessToken) => {
+          const options = {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            url: `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`
+          }
+          const response = await axios(options)
+         
+          return(response.data)
+          
+        }
+
+        const access_token = await getAccessToken(refresh_token)
+        const following = await getFollowing(access_token)
+        res.json(following)
 
       })
 
