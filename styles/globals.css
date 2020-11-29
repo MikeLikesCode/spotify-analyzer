@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+    height:100%;
+    background-color:#171515;
+    color:white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration:none;
+  color:white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/** Now Playing **/
+
+.now-playing__name {
+  font-size: 1.3em;
+  margin-bottom: 0.2em;
+}
+
+.now-playing__artist {
+  margin-bottom: 0.5em;
+}
+
+.now-playing__status {
+  margin-bottom: 1em;
+}
+
+.now-playing__img {
+  margin-right: 10px;
+  
+}
+
+.now-playing__img img {
+height:70px;
+}
+
+.now-playing__side {
+  margin-left: 5%;
+}
+
+/** Progress **/
+
+.progress {
+  border: 1px solid #eee;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress__bar {
+  background-color: rgb(29, 185, 84);
+  height: 4px;
+}
+
+.main-wrapper {
+  background-color: rgb(34, 31, 31);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  position: fixed;
+  bottom: 3vh;
+  right: 1vw;
+  font-size: 12px;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+}
+
+#nprogress .bar {
+  background: rgb(29, 185, 84) !important;
+  }
+
+.active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(24, 24, 24);
+    border-left: 4px solid rgb(30, 215, 96);
+    
+} 
+
+button:focus, [type="submit"]:focus {
+  outline: none;
+}
+
+.tempImage{
+  border-radius: 50%;
+}
+
+.mainLink:hover{
+  cursor: pointer;
+}
+
+@media only screen and (max-width:600px){
+  .active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(24, 24, 24);
+    border:0;
+    border-top: 3px solid rgb(30, 215, 96);
+    
+} 
+}
