@@ -6,40 +6,8 @@ import fetch from "isomorphic-unfetch";
 import Image from "next/image";
 import artistStyles from './artist.module.css'
 import {formatWithCommas} from '../../utils'
-import styled from "styled-components"
-import axios from 'axios'
-
-const GreenButton = styled.a`
-  position: relative;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.95rem;
-  text-align: center !important;
-  background-color: #1db954;
-  border: 0;
-  border-radius: 50px;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 0.4rem 2rem;
-  margin-left: 0px;
-  letter-spacing: 1.2px;
-  margin-top: 15px;
-  font-weight: 600;
-  box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
-  &:hover {
-    background-color: #1db954;
-  }
-`;
-
 
 const Page = ({ refresh_token, data }) => {
-  const isFollowing = data.following[0];
-  console.log(data.artist.id)
-  function followUnfollow(){
-    fetch(
-      `http://localhost:3001/api/followArtist?refresh_token=${refresh_token}&id=${data.artist.id}`
-    );
-  }
     console.log(data)
   return (
     <>
@@ -52,9 +20,6 @@ const Page = ({ refresh_token, data }) => {
             <div style={{marginBottom:'2vh'}}>
          <Image key={data.artist.images[0].url} className={artistStyles.Image} src={data.artist.images[0].url} width={190} height={190}/>
          <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{data.artist.name}</h1>    
-         <div style={{marginTop:'2vh'}}>
-        <GreenButton onClick={followUnfollow}>{isFollowing ? "Following" : "Follow"}</GreenButton>
-        </div>
          </div>
          <div style={{display:'flex', justifyContent:'center'}}>
          <div style={{ padding:'0px 25px'}}>
@@ -124,15 +89,9 @@ export async function getServerSideProps({ req, params }) {
     );
     const relatedJson = await relatedData.json();
 
-    const followingData = await fetch(
-      `http://localhost:3001/api/isFollowing?refresh_token=${refresh_token_v2}&id=${id}`
-    )
-    const followingJson = await followingData.json();
-
     data = {
       artist : trackJson,
-      related : relatedJson,
-      following : followingJson
+      related : relatedJson
     };
   } else {
     data = null;

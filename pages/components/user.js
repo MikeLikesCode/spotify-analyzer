@@ -37,7 +37,7 @@ const User = (props) => {
                   </div>
                   <div>
                     <span className={userStyles.userNumbers}>
-                      {props.data.artists.following.artists.total}{" "}
+                      {/* {props.data.artists.following.artists.total}{" "} */}
                     </span>
                     <p className={userStyles.underText}>Following</p>
                   </div>
