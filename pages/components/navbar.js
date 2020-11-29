@@ -78,9 +78,11 @@ const router = useRouter();
         </div>
       </div>
 
+      <a target="_blank" href="https://github.com/MikeLikesCode/spotify-analyzer">
       <div className={navStyles.Github}>
         <FontAwesomeIcon icon={faGithub} />
       </div>
+      </a>
     </Nav>
   </div>
  )
