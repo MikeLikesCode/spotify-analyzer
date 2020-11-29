@@ -6,9 +6,52 @@ import fetch from "isomorphic-unfetch";
 import Image from "next/image";
 import artistStyles from './artist.module.css'
 import {formatWithCommas} from '../../utils'
+import styled from "styled-components"
+
+const GreenButton = styled.a`
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-align: center !important;
+  background-color: #1db954;
+  border: 0;
+  border-radius: 50px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.5rem 2rem;
+  width: 210px;
+  margin-left: 0px;
+  letter-spacing: 1.2px;
+  margin-top: 15px;
+  font-weight: 600;
+  box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background-color: #1db954;
+  }
+`;
 
 const Page = ({ refresh_token, data }) => {
-    console.log(data)
+    const isFollowing = data.following[0];
+    function handleFollowed(){
+      if(!isFollowing){
+        fetch(`http://localhost:3001/api/followArtist?refresh_token=${refresh_token}&id=${data.artist.id}` , {
+          method: 'PUT',
+          headers:{
+            'Accept' : 'application/json',
+            'Content-Type':'application/json'
+          }
+        })
+      } else{
+        fetch(`http://localhost:3001/api/unfollowArtist?refresh_token=${refresh_token}&id=${data.artist.id}` , {
+          method: 'DELETE',
+          headers:{
+            'Accept' : 'application/json',
+            'Content-Type':'application/json'
+          }
+        })
+      }
+      
+    }
   return (
     <>
       {!refresh_token ? (
@@ -19,7 +62,10 @@ const Page = ({ refresh_token, data }) => {
             <div>
             <div style={{marginBottom:'2vh'}}>
          <Image key={data.artist.images[0].url} className={artistStyles.Image} src={data.artist.images[0].url} width={190} height={190}/>
-         <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{data.artist.name}</h1>    
+         <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{data.artist.name}</h1>   
+         <div style={{margin:'15px 0px'}}>
+      <GreenButton onClick={ handleFollowed}>{isFollowing ? "Following" : "Follow"}</GreenButton>
+         </div> 
          </div>
          <div style={{display:'flex', justifyContent:'center'}}>
          <div style={{ padding:'0px 25px'}}>
@@ -52,7 +98,7 @@ const Page = ({ refresh_token, data }) => {
          {data.related.artists.map((artist,i) => {
            return(
           
-             <li className="mainLink" style={{padding:'5px 15px', width:'20%'}}>
+             <li key={i} className="mainLink" style={{padding:'5px 15px', width:'20%'}}>
                  <Link className="mainLink" href={`/artist/${artist.id}`} >
                 <div>
              <Image key={artist.images[0].url} className={artistStyles.Image} src={artist.images[0].url} width={120} height={120}/>
@@ -89,9 +135,15 @@ export async function getServerSideProps({ req, params }) {
     );
     const relatedJson = await relatedData.json();
 
+    const followingData = await fetch(
+      `http://localhost:3001/api/followingArtist?refresh_token=${refresh_token_v2}&id=${id}`
+    );
+    const followingJson = await followingData.json();
+
     data = {
       artist : trackJson,
-      related : relatedJson
+      related : relatedJson,
+      following : followingJson
     };
   } else {
     data = null;

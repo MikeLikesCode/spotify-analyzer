@@ -87,7 +87,7 @@ if (!dev && cluster.isMaster) {
         res.cookie(stateKey, state);
     
         // your application requests authorization
-        const scope = 'user-read-private user-read-email user-top-read playlist-modify-private user-read-recently-played';
+        const scope = 'user-read-private user-read-email user-top-read playlist-modify-private user-read-recently-played user-follow-modify user-follow-read';
         
         res.redirect('https://accounts.spotify.com/authorize?' +
           querystring.stringify({
@@ -124,7 +124,7 @@ if (!dev && cluster.isMaster) {
               grant_type: 'authorization_code'
             },
             headers: {
-              'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+              'Authorization': 'Basic ' + (new Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
             },
             json: true
           };
@@ -165,7 +165,7 @@ if (!dev && cluster.isMaster) {
 
         const options = {
           method: 'POST',
-          headers: { 'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')) },
+          headers: { 'Authorization': 'Basic ' + (new Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')) },
           url: 'https://accounts.spotify.com/api/token',
           data: querystring.stringify(data)
         }
@@ -288,6 +288,78 @@ if (!dev && cluster.isMaster) {
           const followed = await getFollowed(access_token)
 
           res.json(followed)
+
+        } catch(err) {
+          res.json(`Error: ${err}`)
+        }
+      })
+
+      server.get('/api/followingArtist', async function(req, res){
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        try{
+          const getFollowing = async (accessToken) => {
+            const options = {
+              method: 'GET',
+              headers: { 'Authorization': 'Bearer ' + accessToken },
+              url: `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`
+            }
+            const response = await axios(options)
+            return(response.data)
+          }
+      
+          const access_token = await getAccessToken(refresh_token)
+          const following = await getFollowing(access_token)
+
+          res.json(following)
+
+        } catch(err) {
+          res.json(`Error: ${err}`)
+        }
+      })
+
+      server.put('/api/followArtist', async function(req, res){
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        try{
+          const followArtist = async (accessToken) => {
+            const options = {
+              method: 'PUT',
+              headers: { 'Authorization': 'Bearer ' + accessToken },
+              url: `https://api.spotify.com/v1/me/following?type=artist&ids=${id}`
+            }
+            const response = await axios(options)
+            return(response.data)
+          }
+      
+          const access_token = await getAccessToken(refresh_token)
+          const follow = await  followArtist(access_token)
+
+          res.json(follow)
+
+        } catch(err) {
+          res.json(`Error: ${err}`)
+        }
+      })
+
+      server.delete('/api/unfollowArtist', async function(req, res){
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        try{
+          const unfollowArtist = async (accessToken) => {
+            const options = {
+              method: 'DELETE',
+              headers: { 'Authorization': 'Bearer ' + accessToken },
+              url: `https://api.spotify.com/v1/me/following?type=artist&ids=${id}`
+            }
+            const response = await axios(options)
+            return(response.data)
+          }
+      
+          const access_token = await getAccessToken(refresh_token)
+          const unfollow = await  unfollowArtist(access_token)
+
+          res.json(unfollow)
 
         } catch(err) {
           res.json(`Error: ${err}`)

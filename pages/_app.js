@@ -9,6 +9,10 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
+export function reportWebVitals(metric) {
+  console.log(metric)
+}
+
 function SpotifyAnalyzer({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
