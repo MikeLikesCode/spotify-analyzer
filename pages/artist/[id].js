@@ -7,6 +7,7 @@ import Image from "next/image";
 import artistStyles from './artist.module.css'
 import {formatWithCommas} from '../../utils'
 import styled from "styled-components"
+import { Component } from "react";
 
 const GreenButton = styled.a`
   color: #fff;
@@ -30,52 +31,74 @@ const GreenButton = styled.a`
   }
 `;
 
-const Page = ({ refresh_token, data }) => {
-    const isFollowing = data.following[0];
-    function handleFollowed(){
-      if(!isFollowing){
-        fetch(`http://localhost:3001/api/followArtist?refresh_token=${refresh_token}&id=${data.artist.id}` , {
+class artistPage extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isFollowing : this.props.data.following[0]
+    }
+    this.handleFollowed = this.handleFollowed.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.data.following[0] !== this.state.isFollowing) {
+      this.setState({ isFollowing: nextProps.data.following[0] });
+    }
+  }
+     handleFollowed(){
+      if(!this.state.isFollowing){
+        fetch(`http://localhost:3001/api/followArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
           method: 'PUT',
           headers:{
             'Accept' : 'application/json',
             'Content-Type':'application/json'
           }
         })
-      } else{
-        fetch(`http://localhost:3001/api/unfollowArtist?refresh_token=${refresh_token}&id=${data.artist.id}` , {
+
+        this.setState({isFollowing: true})
+        console.log("following")
+      } else if (this.state.isFollowing){
+        fetch(`http://localhost:3001/api/unfollowArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
           method: 'DELETE',
           headers:{
             'Accept' : 'application/json',
             'Content-Type':'application/json'
           }
         })
+        this.setState({isFollowing: false})
+        console.log("unfollowing")
       }
       
     }
+  
+  render(){
+    console.log(this.props.data.following[0])
   return (
     <>
-      {!refresh_token ? (
+      {!this.props.refresh_token ? (
         <Login />
       ) : (
         <Layout>
         <div style={{display:'flex', justifyContent:'center', textAlign:'center', marginTop:'5vh'}}>
             <div>
             <div style={{marginBottom:'2vh'}}>
-         <Image key={data.artist.images[0].url} className={artistStyles.Image} src={data.artist.images[0].url} width={190} height={190}/>
-         <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{data.artist.name}</h1>   
+         <Image key={this.props.data.artist.images[0].url} className={artistStyles.Image} src={this.props.data.artist.images[0].url} width={190} height={190}/>
+         <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{this.props.data.artist.name}</h1>   
          <div style={{margin:'15px 0px'}}>
-      <GreenButton onClick={ handleFollowed}>{isFollowing ? "Following" : "Follow"}</GreenButton>
+      <GreenButton onClick={this.handleFollowed}>{this.state.isFollowing ? "Following" : "Follow"}</GreenButton>
          </div> 
          </div>
          <div style={{display:'flex', justifyContent:'center'}}>
          <div style={{ padding:'0px 25px'}}>
              
-             <span style={{fontWeight:'500',color:'#1DB954' , fontSize:'18px'}}>{formatWithCommas(data.artist.followers.total)}</span>
+             <span style={{fontWeight:'500',color:'#1DB954' , fontSize:'18px'}}>{formatWithCommas(this.props.data.artist.followers.total)}</span>
              <p>Followers</p>
               </div>
              <div style={{ padding:'0px 25px'}}>
                  
-         {data.artist.genres.map((genre,i)=>{
+         {this.props.data.artist.genres.map((genre,i)=>{
              return(
                <p style={{textTransform:'capitalize', fontWeight:'500', color:'#1DB954', fontSize:'18px', margin:0}} key={i}>
                    {genre}
@@ -86,7 +109,7 @@ const Page = ({ refresh_token, data }) => {
          </div>
          <div style={{ padding:'0px 25px'}}>
              
-             <span style={{fontWeight:'500',color:'#1DB954' , fontSize:'18px'}}>{data.artist.popularity}%</span>
+             <span style={{fontWeight:'500',color:'#1DB954' , fontSize:'18px'}}>{this.props.data.artist.popularity}%</span>
              <p>Popularity</p>
               </div>
       
@@ -95,7 +118,7 @@ const Page = ({ refresh_token, data }) => {
          <div style={{marginTop:'5vh'}}>
          <p style={{fontWeight:'500', fontSize:'25px'}}>Related Artists:</p>
          <ul style={{display:'flex', flexWrap:'wrap', justifyContent:'center', padding:'0', listStyle:'none'}}>
-         {data.related.artists.map((artist,i) => {
+         {this.props.data.related.artists.map((artist,i) => {
            return(
           
              <li key={i} className="mainLink" style={{padding:'5px 15px', width:'20%'}}>
@@ -116,6 +139,7 @@ const Page = ({ refresh_token, data }) => {
       )}
     </>
   );
+        }
 };
 
 export async function getServerSideProps({ req, params }) {
@@ -157,4 +181,4 @@ export async function getServerSideProps({ req, params }) {
     },
   };
 }
-export default Page;
+export default artistPage;

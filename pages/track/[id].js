@@ -3,6 +3,7 @@ import Login from "../components/login";
 import Layout from "../components/layout";
 import fetch from "isomorphic-unfetch";
 import Image from "next/image";
+import Link from "next/link";
 import { formatDuration, parsePitchClass } from "../../utils";
 import Chart from "../components/featureData";
 import styled from "styled-components";
@@ -34,6 +35,7 @@ const GreenButton = styled.a`
 `;
 
 const Page = ({ refresh_token, data }) => {
+  console.log(data);
   return (
     <>
       {!refresh_token ? (
@@ -60,12 +62,14 @@ const Page = ({ refresh_token, data }) => {
                 <h2>{data.track.name}</h2>
                 <h4 style={{ fontWeight: "400" }}>
                   <span style={{ color: "#dbdbdb" }}>By</span>{" "}
-                  {data.track.artists.map(({name},i) => {
+                  {data.track.artists.map(({name,id},i) => {
                 return(
-                    <span key={i}>
+                  <Link href={`/artist/${id}`}>
+                    <span className="mainLink" key={i}>
                     {name}
                    {data.track.artists.length > 0 && i === data.track.artists.length - 1 ? '' : ', '}
                    </span>
+                   </Link>
               )  
             })}
                 </h4>
