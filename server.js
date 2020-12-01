@@ -87,7 +87,7 @@ if (!dev && cluster.isMaster) {
         res.cookie(stateKey, state);
     
         // your application requests authorization
-        const scope = 'user-read-private user-read-email user-top-read playlist-modify-private user-read-recently-played user-follow-modify user-follow-read';
+        const scope = 'user-read-private user-read-email user-top-read playlist-read-private playlist-modify-private user-read-recently-played user-follow-modify user-follow-read';
         
         res.redirect('https://accounts.spotify.com/authorize?' +
           querystring.stringify({
@@ -483,7 +483,7 @@ if (!dev && cluster.isMaster) {
             const options = {
               method: 'GET',
               headers: { 'Authorization': 'Bearer ' + accessToken },
-              url: `https://api.spotify.com/v1/me/playlists`
+              url: `https://api.spotify.com/v1/me/playlists?limit=50`
             }
             const response = await axios(options)
             return(response.data)
