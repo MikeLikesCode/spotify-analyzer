@@ -5,7 +5,9 @@
 }
 
 .Artwork{
-    max-width: 250px;    
+    display: inline-block;
+    width: 80px;
+
 }
 
 @media only creen and (max-width: 600px) {

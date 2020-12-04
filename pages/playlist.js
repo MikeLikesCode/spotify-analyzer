@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { parseCookies } from "./api/parseCookies";
 import Login from "./components/login";
 import Layout from "./components/layout";
-import { Spinner } from "reactstrap";
 import Image from "next/image";
+import Link from "next/link"
 import fetch from "isomorphic-unfetch";
 
 const Playlist = ({ refresh_token, data }) => {
@@ -17,9 +16,13 @@ const Playlist = ({ refresh_token, data }) => {
           <h1> Your Playlist</h1>
           <div style={{display:'flex', flexWrap:'wrap', marginTop:'5vh'}}>
           {data.items.map((playlist,i) => (
-            <div style={{textAlign:'center',width:'20%'}}>
-            <Image className="tempImage" src={playlist.images[0].url} width={120} height={120}/>
-            <p>{playlist.name}</p>
+            <div className="mainLink" style={{textAlign:'center',width:'20%', marginBottom:'10px'}}>
+               <Link href={`/playlist/${playlist.id}`} >
+              <div>
+            <Image className="tempImage" src={playlist.images[0].url} width={150} height={150}/>
+            <h6 style={{margin:'10px 0px'}}>{playlist.name}</h6>
+            </div>
+            </Link>
             </div>
           ))}
           </div>

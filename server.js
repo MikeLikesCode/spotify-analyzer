@@ -39,19 +39,19 @@ if (!dev && cluster.isMaster) {
       server.use(bodyParser.urlencoded({ extended: false }))
       server.use(bodyParser.json())
 
-      if (!dev) {
-        // Enforce SSL & HSTS in production
-        server.use(function(req, res, next) {
-          const proto = req.headers["x-forwarded-proto"];
-          if (proto === "https") {
-            res.set({
-              'Strict-Transport-Security': 'max-age=31557600' // one-year
-            });
-            return next();
-          }
-          res.redirect("https://" + req.headers.host + req.url);
-        });
-      }
+      // if (!dev) {
+      //   Enforce SSL & HSTS in production
+      //   server.use(function(req, res, next) {
+      //     const proto = req.headers["x-forwarded-proto"];
+      //     if (proto === "https") {
+      //       res.set({
+      //         'Strict-Transport-Security': 'max-age=31557600' // one-year
+      //       });
+      //       return next();
+      //     }
+      //     res.redirect("https://" + req.headers.host + req.url);
+      //   });
+      // }
       
       // Static files
       // https://github.com/zeit/next.js/tree/4.2.3#user-content-static-file-serving-eg-images
@@ -312,6 +312,30 @@ if (!dev && cluster.isMaster) {
           const following = await getFollowing(access_token)
 
           res.json(following)
+
+        } catch(err) {
+          res.json(`Error: ${err}`)
+        }
+      })
+
+      server.get('/api/getPlaylist', async function(req, res){
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        try{
+          const getPlaylist = async (accessToken) => {
+            const options = {
+              method: 'GET',
+              headers: { 'Authorization': 'Bearer ' + accessToken },
+              url: `https://api.spotify.com/v1/playlists/${id}`
+            }
+            const response = await axios(options)
+            return(response.data)
+          }
+      
+          const access_token = await getAccessToken(refresh_token)
+          const playlist = await getPlaylist(access_token)
+
+          res.json(playlist)
 
         } catch(err) {
           res.json(`Error: ${err}`)
