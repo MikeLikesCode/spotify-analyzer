@@ -18,7 +18,7 @@ const TrackItem = ({ track }) => {
             <Image key={track.album.images[0].url} src={track.album.images[0].url} alt="Album Cover" width={80} height={80} />
          </div>
          <div style={{ paddingLeft: "1rem" }}>
-         <h4 style={{ fontSize: "1.3rem", marginBottom: "2px", color: "white", overflow:"hidden", whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{track.name}</h4>
+         <h4 style={{ width:'25vw', fontSize: "1.3rem", marginBottom: "2px", color: "white", overflow:"hidden", whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{track.name}</h4>
      
         <p style={{  fontSize: "0.9rem", padding: "0rem 0rem", margin:0 }}>
             

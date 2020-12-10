@@ -1,4 +1,5 @@
 import { parseCookies } from "../api/parseCookies";
+import { trackData, trackAnalysis, trackFeature } from "../api/spotify";
 import Login from "../components/login";
 import Layout from "../components/layout";
 import fetch from "isomorphic-unfetch";
@@ -35,7 +36,6 @@ const GreenButton = styled.a`
 `;
 
 const Page = ({ refresh_token, data }) => {
-  console.log(data);
   return (
     <>
       {!refresh_token ? (
@@ -319,20 +319,11 @@ export async function getServerSideProps({ req, params }) {
   let id = null;
   if (refresh_token_v2) {
     id = params.id;
-    const trackData = await fetch(
-      `http://localhost:3001/api/track?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const trackJson = await trackData.json();
 
-    const featureData = await fetch(
-      `http://localhost:3001/api/features?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const featureJson = await featureData.json();
-
-    const analysisData = await fetch(
-      `http://localhost:3001/api/analysis?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const analysisJson = await analysisData.json();
+    const trackJson = await trackData(refresh_token_v2,id);
+    const featureJson = await trackFeature(refresh_token_v2,id);
+    const analysisJson = await trackAnalysis(refresh_token_v2,id);
+    
     data = {
       track: trackJson,
       features: featureJson,

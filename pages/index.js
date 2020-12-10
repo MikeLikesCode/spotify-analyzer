@@ -1,9 +1,8 @@
 import { parseCookies } from "./api/parseCookies";
+import { getProfile, getTracks, getArtist, getFollowed, getPlaylist} from "./api/spotify"
 import Login from "./components/login";
 import Layout from "./components/layout";
 import User from "./components/user";
-
-import fetch from "isomorphic-unfetch";
 
 const Index = ({ refresh_token, data }) => {
   return (
@@ -25,37 +24,17 @@ export async function getServerSideProps({ req }) {
   let data = null;
 
   if (refresh_token_v2) {
-    const profileData = await fetch(
-      `http://localhost:3001/api/profile?refresh_token=${refresh_token_v2}`
-    );
-    const profileJson = await profileData.json();
 
-    const tracksData = await fetch(
-      `http://localhost:3001/api/tracks?refresh_token=${refresh_token_v2}&time_range=long_term&limit=10`
-    );
-    const trackJson = await tracksData.json();
-    const artistData = await fetch(
-      `http://localhost:3001/api/artists?refresh_token=${refresh_token_v2}&time_range=long_term&limit=10`
-    );
-    const artistJson = await artistData.json();
+    const profileJson = await getProfile(refresh_token_v2);
+    const tracksJson = await getTracks(refresh_token_v2);
+    const artistJson = await getArtist(refresh_token_v2);
+    const followedJson = await getFollowed(refresh_token_v2);
+    const playlistJson = await getPlaylist(refresh_token_v2);
 
-    const followedData = await fetch(
-      `http://localhost:3001/api/followed?refresh_token=${refresh_token_v2}`
-    );
-
-    const followedJson = await followedData.json();
-
-    const playlistData = await fetch(
-      `http://localhost:3001/api/list?refresh_token=${refresh_token_v2}`
-    );
-
-    const playlistJson = await playlistData.json();
 
     data = {
       profile: profileJson,
-      tracks: {
-        long_term: trackJson,
-      },
+      tracks:  tracksJson,
       artists: {
         long_term: artistJson,
         following: followedJson,

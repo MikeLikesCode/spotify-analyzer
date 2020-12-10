@@ -70,7 +70,7 @@ const User = (props) => {
                   paddingTop:'0px'
                 }}
               >
-                {props.data.tracks.long_term.items
+                {props.data.tracks.items
                   .slice(0, 10)
                   .map((src,i) => {
                     return (
@@ -114,8 +114,8 @@ const User = (props) => {
                             <Image
                               src={src.images[0].url}
                               alt="Album Cover"
-                              width={100}
-                              height={100}
+                              width={80}
+                              height={80}
                             />
                         
                             <div style={{ paddingLeft: "1rem" }}>

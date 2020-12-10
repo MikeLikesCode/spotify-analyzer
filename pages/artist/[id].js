@@ -8,6 +8,7 @@ import artistStyles from './artist.module.css'
 import {formatWithCommas} from '../../utils'
 import styled from "styled-components"
 import { Component } from "react";
+import { artistData, followedData, relatedData } from "../api/spotify";
 
 const GreenButton = styled.a`
   color: #fff;
@@ -58,7 +59,6 @@ class artistPage extends Component{
         })
 
         this.setState({isFollowing: true})
-        console.log("following")
       } else if (this.state.isFollowing){
         fetch(`http://localhost:3001/api/unfollowArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
           method: 'DELETE',
@@ -68,13 +68,11 @@ class artistPage extends Component{
           }
         })
         this.setState({isFollowing: false})
-        console.log("unfollowing")
       }
       
     }
   
   render(){
-    console.log(this.props.data.following[0])
   return (
     <>
       {!this.props.refresh_token ? (
@@ -149,20 +147,10 @@ export async function getServerSideProps({ req, params }) {
   let id = null;
   if (refresh_token_v2) {
     id = params.id;
-    const trackData = await fetch(
-      `http://localhost:3001/api/artist?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const trackJson = await trackData.json();
 
-    const relatedData = await fetch(
-      `http://localhost:3001/api/relatedArtist?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const relatedJson = await relatedData.json();
-
-    const followingData = await fetch(
-      `http://localhost:3001/api/followingArtist?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const followingJson = await followingData.json();
+    const trackJson = await artistData(refresh_token_v2,id);
+    const relatedJson = await relatedData(refresh_token_v2,id);
+    const followingJson = await followedData(refresh_token_v2,id);
 
     data = {
       artist : trackJson,

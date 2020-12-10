@@ -1,9 +1,9 @@
 import { parseCookies } from "./api/parseCookies";
+import { history } from "./api/spotify";
 import Login from "./components/login";
 import Layout from "./components/layout";
 import { Spinner } from "reactstrap";
 import TrackItem from './components/trackItem'
-import fetch from "isomorphic-unfetch";
 
 const Recent = ({ refresh_token, data }) => {
   return (
@@ -51,10 +51,7 @@ export async function getServerSideProps({ req }) {
   let json = null;
 
   if (refresh_token_v2) {
-    const res = await fetch(
-      `http://localhost:3001/api/history?refresh_token=${refresh_token_v2}&limit=50`
-    );
-    json = await res.json();
+    json = await history(refresh_token_v2);
   } else {
     json = null;
     refresh_token_v2 = null;

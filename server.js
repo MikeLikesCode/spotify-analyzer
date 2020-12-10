@@ -456,7 +456,7 @@ if (!dev && cluster.isMaster) {
 
       })
 
-      server.get('/api/features', async function(req, res){
+      server.get('/api/feature', async function(req, res){
 
         const refresh_token = req.query.refresh_token;
         const id = req.query.id
@@ -477,6 +477,29 @@ if (!dev && cluster.isMaster) {
         res.json(features)
 
       })
+
+      server.get('/api/features', async function(req, res){
+
+        const refresh_token = req.query.refresh_token;
+        const id = req.query.id
+        const getFeatures = async (accessToken) => {
+          const options = {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            url: `https://api.spotify.com/v1/audio-features?ids=${id}`
+          }
+          const response = await axios(options)
+         
+          return(response.data)
+          
+        }
+
+        const access_token = await getAccessToken(refresh_token)
+        const features = await getFeatures(access_token)
+        res.json(features)
+
+      })
+
 
       server.get('/api/analysis', async function(req, res){
 

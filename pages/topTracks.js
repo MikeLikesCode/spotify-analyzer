@@ -1,10 +1,10 @@
 import {Component} from 'react'
 import { parseCookies } from "./api/parseCookies";
+import { longTermTrack, shortTermTrack, mediumTermTrack } from './api/spotify'
 import Login from "./components/login";
 import Layout from "./components/layout";
 import { Spinner } from "reactstrap";
 import TrackItem from './components/trackItem'
-import fetch from "isomorphic-unfetch";
 import styled from "styled-components";
 
 const RangeButton = styled.button`
@@ -94,20 +94,10 @@ export async function getServerSideProps({ req }) {
   let mdRes = null;
 
   if (refresh_token_v2) {
-    const longTerm = await fetch(
-      `http://localhost:3001/api/tracks?refresh_token=${refresh_token_v2}&time_range=long_term&limit=50`
-    );
-    ltRes = await longTerm.json();
-
-    const shortTerm = await fetch(
-      `http://localhost:3001/api/tracks?refresh_token=${refresh_token_v2}&time_range=short_term&limit=50`
-    );
-    stRes = await shortTerm.json();
-
-    const medTerm = await fetch(
-      `http://localhost:3001/api/tracks?refresh_token=${refresh_token_v2}&time_range=medium_term&limit=50`
-    );
-    mdRes = await medTerm.json();
+  
+    ltRes = await longTermTrack(refresh_token_v2);
+    stRes = await shortTermTrack(refresh_token_v2);
+    mdRes = await mediumTermTrack(refresh_token_v2);
     
   } else {
     json = null;

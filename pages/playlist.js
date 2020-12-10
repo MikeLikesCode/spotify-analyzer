@@ -1,4 +1,5 @@
 import { parseCookies } from "./api/parseCookies";
+import { getPlaylist, userPlaylist } from "./api/spotify"
 import Login from "./components/login";
 import Layout from "./components/layout";
 import Image from "next/image";
@@ -6,7 +7,6 @@ import Link from "next/link"
 import fetch from "isomorphic-unfetch";
 
 const Playlist = ({ refresh_token, data }) => {
-  console.log(data.items)
   return (
     <>
       {!refresh_token ? (
@@ -38,10 +38,7 @@ export async function getServerSideProps({ req }) {
   let json = null;
 
   if (refresh_token_v2) {
-    const res = await fetch(
-      `http://localhost:3001/api/list?refresh_token=${refresh_token_v2}`
-    );
-    json = await res.json();
+    json = await getPlaylist(refresh_token_v2)
   } else {
     json = null;
     refresh_token_v2 = null;

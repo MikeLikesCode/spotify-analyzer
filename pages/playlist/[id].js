@@ -1,4 +1,5 @@
 import { parseCookies } from "../api/parseCookies";
+import { playlistData , playlistFeatures } from "../api/spotify"
 import Login from "../components/login";
 import Layout from "../components/layout";
 import Image from "next/image"
@@ -7,7 +8,7 @@ import TrackItem from '../components/trackItem'
 import { Component } from "react";
 import styled from 'styled-components'
 import {formatWithCommas} from '../../utils'
-import featureData from "../components/featureData";
+import Chart from "../components/featureData";
 
 const GreenButton = styled.a`
   display: inline-block;
@@ -32,7 +33,6 @@ const GreenButton = styled.a`
 
 class PlaylistPage extends Component{
   render(){
-    console.log(this.props.data)
   return (
     <>
       {!this.props.refresh_token ? (
@@ -40,16 +40,17 @@ class PlaylistPage extends Component{
       ) : (
         <Layout>
             <div style={{display:'flex'}}>
-            <div style={{width:'35%', minWidth:'200px',textAlign:'center'}}>
+            <div style={{width:'30%', minWidth:'400px',textAlign:'center'}}>
             <Image src={this.props.data.playlist.images[0].url} width={300} height={300}/>
             <h2 style={{marginTop:'2vh'}}>{this.props.data.playlist.name}</h2>
             <p style={{marginBottom:'8px'}}>By {this.props.data.playlist.owner.display_name} · <span style={{color: "rgb(182, 182, 182)"}}>{formatWithCommas(this.props.data.playlist.tracks.total)} songs</span></p>
             <p style={{marginBottom:'5px'}}>{this.props.data.playlist.description}</p>
             
-            <GreenButton>Get Reccomendations</GreenButton>
+            <GreenButton>Get Recommendations</GreenButton>
             
+            <Chart data={this.props.data.feature.audio_features} />
             </div>
-            <div style={{flexGrow:'1',paddingLeft:'5vw'}}>
+            <div style={{width: '70%',flexGrow:'1',paddingLeft:'5vw'}}>
             <ul style={{padding:'0',listStyle:'none'}}>
             {this.props.data.playlist.tracks.items.map((track,i) => (
                 <TrackItem track={track.track}/>
@@ -58,6 +59,7 @@ class PlaylistPage extends Component{
             </div>
             </div>
             
+
         </Layout>
       )}
     </>
@@ -73,21 +75,17 @@ export async function getServerSideProps({ req, params }) {
   let songs = [];
   if (refresh_token_v2) {
     id = params.id;
-    const playlistData = await fetch(
-      `http://localhost:3001/api/getPlaylist?refresh_token=${refresh_token_v2}&id=${id}`
-    );
-    const  playlistJson = await playlistData.json();
+    const playlistJson = await playlistData(refresh_token_v2,id);
     
     if(playlistJson !== null){
-        songs.push(playlistJson.tracks.items[0].track.id);
+      for(var i = 0; i < playlistJson.tracks.items.length; i++ ){
+       songs.push(playlistJson.tracks.items[i].track.id);
+      }
     }
-    const featureData = await fetch(
-      `http://localhost:3001/api/analysis?refresh_token=${refresh_token_v2}&id=${songs}`
-    );
-    const featureJson = await featureData.json();
 
+    const featureJson = await playlistFeatures(refresh_token_v2,songs);
     data = {
-      playlist :  playlistJson,
+      playlist : playlistJson,
       feature: featureJson
     };
   } else {

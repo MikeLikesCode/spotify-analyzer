@@ -1,11 +1,11 @@
 import {Component} from 'react'
 import { parseCookies } from "./api/parseCookies";
+import { longTermArtist, mediumTermArtist, shortTermArtist } from "./api/spotify"
 import Login from "./components/login";
 import Layout from "./components/layout";
 import { Spinner } from "reactstrap";
 import Image from "next/image";
 import Link from 'next/link'
-import fetch from "isomorphic-unfetch";
 import styled from "styled-components";
 
 const RangeButton = styled.button`
@@ -36,7 +36,6 @@ dataCall = {
 
 changeRange(range){
   const data = this.dataCall[range];
-  console.log(this.dataCall[range]);
   this.setState({artistsData : data, activeRange: range})
 }
 
@@ -69,7 +68,7 @@ setActiveRange = range => this.changeRange(range);
         <ul style={{marginTop:'5vh',display: 'flex', flexWrap: 'wrap',listStyle: 'none', padding:'0'}}>
         {artistsData ? (
          
-          artistsData.items.map(({id,external_urls,images,name}, i) => (
+          artistsData.items.map(({id,images,name}, i) => (
             
             <li className="mainLink" key={i} style={{textAlign: 'center', padding:'10px 15px', width:'20%'}}> 
             <Link href={`/artist/${id}`} >
@@ -104,23 +103,14 @@ export async function getServerSideProps({ req }) {
   let mdRes = null;
 
   if (refresh_token_v2) {
-    const longTerm = await fetch(
-      `http://localhost:3001/api/artists?refresh_token=${refresh_token_v2}&time_range=long_term&limit=50`
-    );
-    ltRes = await longTerm.json();
+     ltRes = await longTermArtist(refresh_token_v2);
+     stRes = await shortTermArtist(refresh_token_v2);
+     mdRes = await mediumTermArtist(refresh_token_v2);
 
-    const shortTerm = await fetch(
-      `http://localhost:3001/api/artists?refresh_token=${refresh_token_v2}&time_range=short_term&limit=50`
-    );
-    stRes = await shortTerm.json();
-
-    const medTerm = await fetch(
-      `http://localhost:3001/api/artists?refresh_token=${refresh_token_v2}&time_range=medium_term&limit=50`
-    );
-    mdRes = await medTerm.json();
-    
   } else {
-    json = null;
+    ltRes = null;
+    stRes = null;
+    mdRes = null;
     refresh_token_v2 = null;
   }
   return {

@@ -31,7 +31,7 @@ class featureData extends Component {
     const dataset = [];
     features.forEach((props) => {
       dataset[props] = data.length
-        ? this.avg(data.map((feat) => feat && feat[prop]))
+        ? this.avg(data.map((feat) => feat && feat[props]))
         : data[props];
     });
 
