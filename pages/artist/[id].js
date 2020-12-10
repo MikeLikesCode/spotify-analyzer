@@ -50,7 +50,7 @@ class artistPage extends Component{
   }
      handleFollowed(){
       if(!this.state.isFollowing){
-        fetch(`http://localhost:3001/api/followArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
+        fetch(`https://spotify-analysis-next.herokuapp.com/api/followArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
           method: 'PUT',
           headers:{
             'Accept' : 'application/json',
@@ -60,7 +60,7 @@ class artistPage extends Component{
 
         this.setState({isFollowing: true})
       } else if (this.state.isFollowing){
-        fetch(`http://localhost:3001/api/unfollowArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
+        fetch(`https://spotify-analysis-next.herokuapp.com/api/unfollowArtist?refresh_token=${this.props.refresh_token}&id=${this.props.data.artist.id}` , {
           method: 'DELETE',
           headers:{
             'Accept' : 'application/json',
