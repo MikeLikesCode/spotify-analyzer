@@ -1,10 +1,10 @@
 import { parseCookies } from "./api/parseCookies";
-import { getPlaylist, userPlaylist } from "./api/spotify"
+import { getPlaylist } from "./api/spotify"
 import Login from "./components/login";
 import Layout from "./components/layout";
 import Image from "next/image";
 import Link from "next/link"
-import fetch from "isomorphic-unfetch";
+import playlistStyles from './playlistStyles.module.css'
 
 const Playlist = ({ refresh_token, data }) => {
   return (
@@ -16,7 +16,7 @@ const Playlist = ({ refresh_token, data }) => {
           <h1> Your Playlist</h1>
           <div style={{display:'flex', flexWrap:'wrap', marginTop:'5vh'}}>
           {data.items.map((playlist,i) => (
-            <div className="mainLink" style={{textAlign:'center',width:'20%', marginBottom:'10px'}}>
+            <div className={playlistStyles.playlistItem}>
                <Link href={`/playlist/${playlist.id}`} >
               <div>
             <Image className="tempImage" src={playlist.images[0].url} width={150} height={150}/>

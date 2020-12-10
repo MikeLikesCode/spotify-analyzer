@@ -2,7 +2,6 @@ import { parseCookies } from "../api/parseCookies";
 import { trackData, trackAnalysis, trackFeature } from "../api/spotify";
 import Login from "../components/login";
 import Layout from "../components/layout";
-import fetch from "isomorphic-unfetch";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDuration, parsePitchClass } from "../../utils";
@@ -10,6 +9,8 @@ import Chart from "../components/featureData";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+import trackStyles from './trackStyles.module.css'
+
 
 const GreenButton = styled.a`
   display: flex;
@@ -33,6 +34,11 @@ const GreenButton = styled.a`
   &:hover {
     background-color: #1db954;
   }
+
+  @media only screen and (max-width:600px){
+    width:100%;
+    margin-bottom:5vh;
+  }
 `;
 
 const Page = ({ refresh_token, data }) => {
@@ -42,22 +48,15 @@ const Page = ({ refresh_token, data }) => {
         <Login />
       ) : (
         <Layout>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop:'4vh',
-              marginBottom: "6vh",
-            }}
-          >
-            <div>
+          <div className={trackStyles.container} >
+            <div style={{marginRight:'2vw'}}>
               <Image
                 src={data.track.album.images[0].url}
                 width="200"
                 height="200"
               />
             </div>
-            <div style={{ marginLeft: "25px" }}>
+            <div >
               <div style={{ marginBottom: "18px" }}>
                 <h2>{data.track.name}</h2>
                 <h4 style={{ fontWeight: "400" }}>
@@ -90,23 +89,8 @@ const Page = ({ refresh_token, data }) => {
             </div>
             <div></div>
           </div>
-        <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column'
-        }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
-              width: "100%",
-              marginBottom: "50px",
-              textAlign: "center",
-              borderTop: "1px solid rgb(64, 64, 64)",
-              borderLeft: "1px solid rgb(64, 64, 64)",
-            }}
-          >
+        <div className={trackStyles.track} >
+          <div className={trackStyles.dataChart}>
             <div
               style={{
                 padding: "15px 10px",
@@ -301,7 +285,7 @@ const Page = ({ refresh_token, data }) => {
           </div>
           </div>
         
-        <div style={{display:'flex',justifyContent:'center', }}>
+        <div style={{display:'flex',justifyContent:'center', paddingBottom:'15vh' }}>
         <div style={{position:'relative',width:'100%', maxWidth:'800px'}}>
           <Chart data={data.features} type="" />
           </div>

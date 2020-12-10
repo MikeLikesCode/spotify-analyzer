@@ -3,12 +3,12 @@ import { playlistData , playlistFeatures } from "../api/spotify"
 import Login from "../components/login";
 import Layout from "../components/layout";
 import Image from "next/image"
-import fetch from "isomorphic-unfetch";
 import TrackItem from '../components/trackItem'
 import { Component } from "react";
 import styled from 'styled-components'
 import {formatWithCommas} from '../../utils'
 import Chart from "../components/featureData";
+import playlistStyles from './playlist.module.css'
 
 const GreenButton = styled.a`
   display: inline-block;
@@ -39,7 +39,7 @@ class PlaylistPage extends Component{
         <Login />
       ) : (
         <Layout>
-            <div style={{display:'flex'}}>
+            <div className={playlistStyles.container}>
             <div style={{width:'30%', minWidth:'400px',textAlign:'center'}}>
             <Image src={this.props.data.playlist.images[0].url} width={300} height={300}/>
             <h2 style={{marginTop:'2vh'}}>{this.props.data.playlist.name}</h2>
@@ -48,7 +48,9 @@ class PlaylistPage extends Component{
             
             <GreenButton>Get Recommendations</GreenButton>
             
+            <div style={{maxWidth:'380px'}}>
             <Chart data={this.props.data.feature.audio_features} />
+            </div>
             </div>
             <div style={{width: '70%',flexGrow:'1',paddingLeft:'5vw'}}>
             <ul style={{padding:'0',listStyle:'none'}}>

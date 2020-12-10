@@ -6,6 +6,7 @@ import Layout from "./components/layout";
 import { Spinner } from "reactstrap";
 import TrackItem from './components/trackItem'
 import styled from "styled-components";
+import trackStyles from './topTracks.module.css'
 
 const RangeButton = styled.button`
   background-color: transparent;
@@ -18,6 +19,9 @@ const RangeButton = styled.button`
     border-bottom: 1px solid ${props => (props.isActive ? 'white' : `transparent`)};
     line-height: 1.5;
     white-space: nowrap;
+  }
+  &:nth-child(1){
+    padding-left:0px;
   }
 `;
 
@@ -49,7 +53,7 @@ setActiveRange = range => this.changeRange(range);
       ) : (
         <Layout>
       
-      <div style={{display:'flex', justifyContent:'space-between'}}>
+      <div className={trackStyles.container}>
           <h2>Your Top tracks</h2>
 
         <div style={{display:'flex'}}>

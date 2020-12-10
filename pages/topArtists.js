@@ -7,7 +7,7 @@ import { Spinner } from "reactstrap";
 import Image from "next/image";
 import Link from 'next/link'
 import styled from "styled-components";
-
+import ArtistStyles from './topArtist.module.css'
 const RangeButton = styled.button`
   background-color: transparent;
   border:0;
@@ -19,6 +19,9 @@ const RangeButton = styled.button`
     border-bottom: 1px solid ${props => (props.isActive ? 'white' : `transparent`)};
     line-height: 1.5;
     white-space: nowrap;
+  }
+  &:nth-child(1){
+    padding-left:0px;
   }
 `;
 
@@ -50,7 +53,7 @@ setActiveRange = range => this.changeRange(range);
       ) : (
         <Layout>
       
-      <div style={{display:'flex', justifyContent:'space-between'}}>
+      <div className={ArtistStyles.container}>
           <h2>Your Top Artists</h2>
 
         <div style={{display:'flex'}}>
@@ -65,16 +68,16 @@ setActiveRange = range => this.changeRange(range);
           </RangeButton>
         </div>
         </div>
-        <ul style={{marginTop:'5vh',display: 'flex', flexWrap: 'wrap',listStyle: 'none', padding:'0'}}>
+        <ul className={ArtistStyles.artistList} style={{marginTop:'5vh',display: 'flex', flexWrap: 'wrap',listStyle: 'none', padding:'0'}}>
         {artistsData ? (
          
           artistsData.items.map(({id,images,name}, i) => (
             
-            <li className="mainLink" key={i} style={{textAlign: 'center', padding:'10px 15px', width:'20%'}}> 
+            <li className={ArtistStyles.artistItem} key={i} > 
             <Link href={`/artist/${id}`} >
             <div>
-            <Image className="tempImage" key={images[0].url} style={{borderRadius:'50%'}} src={images[0].url} width={150} height={150}/>
-            <p style={{paddingTop:'8px', textTransform:'capitalize', fontSize:'20px', fontWeight:'500'}} key={i}>{name}</p>
+            <Image className={ArtistStyles.coverImage} className="tempImage" key={images[0].url} src={images[0].url} width={150} height={150}/>
+            <p className={ArtistStyles.artistName} key={i}>{name}</p>
             </div>
             </Link>
             </li>

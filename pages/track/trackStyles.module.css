@@ -1,0 +1,39 @@
+.container{
+    display: flex;
+    align-items: center;
+    margin-top:4vh;
+    margin-bottom: 6vh;
+}
+
+.track{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dataChart{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+    width: 100%;
+    margin-bottom: 50px;
+    text-align: center;
+    border-top: 1px solid rgb(64, 64, 64);
+    border-left: 1px solid rgb(64, 64, 64);
+}
+
+@media only screen and (max-width:600px){
+    .dataChart{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+        width: 100%;
+        margin-bottom: 50px;
+        text-align: center;
+        border-top: 1px solid rgb(64, 64, 64);
+        border-left: 1px solid rgb(64, 64, 64);
+    }   
+    .container{
+        display: initial;
+        text-align: center;
+    }
+}

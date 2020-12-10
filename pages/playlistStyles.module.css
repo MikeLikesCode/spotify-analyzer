@@ -1,0 +1,14 @@
+.playlistItem{
+    text-align:center;
+    width:20%;
+    margin-bottom:10px;
+}
+
+@media only screen and (max-width:600px){
+    .playlistItem{
+        text-align:center;
+        width:50%;
+        padding: 10px 15px;
+        margin-bottom:10px;
+    }
+}

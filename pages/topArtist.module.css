@@ -1,0 +1,47 @@
+.artistItem{
+    text-align: center;
+    padding:10px 15px;
+    width:20%;
+}
+
+.artistItem:hover{
+    cursor: pointer;
+  }
+
+.container{
+    display:flex;
+    justify-content:space-between;
+}
+
+.artistList{
+    margin-top:5vh;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding:0;
+    margin-left:0px;
+}
+
+.coverImage{
+    border-radius:50%;
+    max-width:150px;
+}
+
+.artistName{
+    padding-top:8px;
+    text-transform:capitalize;
+    font-size:20px;
+    font-weight:500;
+}
+
+@media only screen and (max-width:600px){
+    .container{
+        display:initial;
+    }
+
+    .artistItem{
+        text-align: center ;
+        padding:10px 15px;
+        width:50%;
+    }
+}
