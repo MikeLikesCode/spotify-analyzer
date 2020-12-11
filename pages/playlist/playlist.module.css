@@ -25,6 +25,7 @@
     }
     .details{
         width:100%; 
+        min-width: initial;
     }
     
 }
