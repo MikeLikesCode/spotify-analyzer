@@ -52,7 +52,7 @@ class PlaylistPage extends Component{
             <Chart data={this.props.data.feature.audio_features} />
             </div>
             </div>
-            <div style={{width: '70%',flexGrow:'1',paddingLeft:'5vw'}}>
+            <div className={playlistStyles.trackItem}>
             <ul style={{padding:'0',listStyle:'none'}}>
             {this.props.data.playlist.tracks.items.map((track,i) => (
                 <TrackItem track={track.track}/>

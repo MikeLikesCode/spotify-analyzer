@@ -2,8 +2,20 @@
     display:flex;
 }
 
+.trackItem{
+    width: 70%;
+    flex-grow:1;
+    padding-left:5vw;
+}
+
 @media only screen and (max-width:600px){
     .container{
         display: initial;
     }
+    .trackItem{
+        width: 100%;
+        flex-grow:1;
+        padding-left:0vw;
+    }
+    
 }
