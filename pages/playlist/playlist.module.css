@@ -8,6 +8,12 @@
     padding-left:5vw;
 }
 
+.details{
+    width:30%; 
+    min-width:400px;
+    text-align:center;
+}
+
 @media only screen and (max-width:600px){
     .container{
         display: initial;
@@ -16,6 +22,9 @@
         width: 100%;
         flex-grow:1;
         padding-left:0vw;
+    }
+    .details{
+        width:100%; 
     }
     
 }

@@ -40,7 +40,7 @@ class PlaylistPage extends Component{
       ) : (
         <Layout>
             <div className={playlistStyles.container}>
-            <div style={{width:'30%', minWidth:'400px',textAlign:'center'}}>
+            <div className={playlistStyles.details} >
             <Image src={this.props.data.playlist.images[0].url} width={300} height={300}/>
             <h2 style={{marginTop:'2vh'}}>{this.props.data.playlist.name}</h2>
             <p style={{marginBottom:'8px'}}>By {this.props.data.playlist.owner.display_name} · <span style={{color: "rgb(182, 182, 182)"}}>{formatWithCommas(this.props.data.playlist.tracks.total)} songs</span></p>
