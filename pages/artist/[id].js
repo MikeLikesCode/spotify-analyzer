@@ -119,7 +119,7 @@ class artistPage extends Component{
          {this.props.data.related.artists.map((artist,i) => {
            return(
           
-             <li key={i} className="mainLink" style={{padding:'5px 15px', width:'20%'}}>
+             <li key={i} className={artistStyles.relatedItem}>
                  <Link className="mainLink" href={`/artist/${artist.id}`} >
                 <div>
              <Image key={artist.images[0].url} className={artistStyles.Image} src={artist.images[0].url} width={120} height={120}/>
