@@ -38,7 +38,11 @@
     letter-spacing: 1px;
     font-weight: 700;
     text-transform: uppercase;
-    margin-top: 3vh;
+    margin-top: 5vh;
+}
+
+.buttonLogout:hover{
+    cursor: pointer;
 }
 
 .buttonMain{
@@ -53,6 +57,9 @@
         text-transform: uppercase;
 }
 
+.buttonMain:hover{
+    cursor: pointer;
+}
 .topContainer{
     display: flex;
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { Spinner } from "reactstrap";
 import userStyles from "../../styles/User.module.css";
 import Image from "next/image";
