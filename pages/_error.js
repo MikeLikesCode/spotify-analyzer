@@ -3,9 +3,6 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 const GreenButton = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #fff;
   font-size: 0.8rem;
   text-align: center !important;
