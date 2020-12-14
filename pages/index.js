@@ -7,7 +7,7 @@ import User from "./components/user";
 const Index = ({ refresh_token, data }) => {
   return (
     <>
-      {!refresh_token ? (
+      {refresh_token == null ? (
         <Login />
       ) : (
         <Layout>

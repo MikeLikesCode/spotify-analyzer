@@ -38,21 +38,7 @@ if (!dev && cluster.isMaster) {
       const server = express();
       server.use(bodyParser.urlencoded({ extended: false }))
       server.use(bodyParser.json())
-
-      // if (!dev) {
-      //   Enforce SSL & HSTS in production
-      //   server.use(function(req, res, next) {
-      //     const proto = req.headers["x-forwarded-proto"];
-      //     if (proto === "https") {
-      //       res.set({
-      //         'Strict-Transport-Security': 'max-age=31557600' // one-year
-      //       });
-      //       return next();
-      //     }
-      //     res.redirect("https://" + req.headers.host + req.url);
-      //   });
-      // }
-      
+     
       // Static files
       // https://github.com/zeit/next.js/tree/4.2.3#user-content-static-file-serving-eg-images
       server.use('/static', express.static(path.join(__dirname, 'static'), {
@@ -132,8 +118,6 @@ if (!dev && cluster.isMaster) {
           request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
       
-              // const access_token = body.access_token
-              // const refresh_token = body.refresh_token;
               const { access_token, refresh_token } = body
 
               const options = {
