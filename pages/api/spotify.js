@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-unfetch'
 import Cookie from 'js-cookie'
+import Router from 'next/router'
+
 export const getProfile = async (refresh_token) => {
     
     const profileData = await fetch(
@@ -196,6 +198,7 @@ export const playlistFeatures = async (refresh_token,songs) =>{
 
  export const logout = () =>{
    Cookie.remove('refresh_token_v2')
+   Router.push('/');
  }
  
 
