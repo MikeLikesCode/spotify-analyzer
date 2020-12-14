@@ -11,8 +11,7 @@ const GreenButton = styled.a`
   border-radius: 50px;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 5px 2px;
-  width: 210px;
+  padding: 6px 10px;
   margin-left: 0px;
   letter-spacing: 1.2px;
   margin-top: 15px;

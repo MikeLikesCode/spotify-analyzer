@@ -46,7 +46,7 @@ const Login = () => {
             <span className="bold">Spotify Analyzer</span> allows you to view
             your Spotify data in a neat way.
           </Tagline>
-          <Tagline>
+          <Tagline style={{fontSize:"1.2rem"}}>
             You also have the ability to find new music according to your taste.
           </Tagline>
           <div style={{ display: "flex", justifyContent: "center" }}>
