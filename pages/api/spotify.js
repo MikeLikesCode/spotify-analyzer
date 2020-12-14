@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch'
-
+import Cookie from 'js-cookie'
 export const getProfile = async (refresh_token) => {
     
     const profileData = await fetch(
@@ -194,6 +194,9 @@ export const playlistFeatures = async (refresh_token,songs) =>{
       return followingJson
  }
 
+ export const logout = () =>{
+   Cookie.remove('refresh_token_v2')
+ }
  
 
 

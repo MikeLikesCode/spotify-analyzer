@@ -5,11 +5,9 @@ import userStyles from "../../styles/User.module.css";
 import Image from "next/image";
 import Link from 'next/link';
 import TrackItem from '../components/trackItem'
+import {logout} from '../api/spotify'
 const User = (props) => {
 
-  function logout(){
-    window.localStorage.removeItem('refresh_token_v2');
-  }
   return (
     <>
       {props.data ? (
@@ -52,7 +50,7 @@ const User = (props) => {
                     <p className={userStyles.underText}>Playlist</p>
                   </div>
                 </div>
-                <Button onClick={logout}className={userStyles.buttonLogout}>Logout</Button>
+                <Button onClick={logout()}className={userStyles.buttonLogout}>Logout</Button>
               </div>
             </div>
           </div>
