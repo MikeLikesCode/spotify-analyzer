@@ -50,7 +50,7 @@ const User = (props) => {
                     <p className={userStyles.underText}>Playlist</p>
                   </div>
                 </div>
-                <Button onClick={logout}className={userStyles.buttonLogout}>Logout</Button>
+                <a onClick={logout}className={userStyles.buttonLogout}>Logout</a>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ const User = (props) => {
               <div className={userStyles.topHeadline}>
                 <h3>Top Songs of All Time</h3>{" "}
                 <Link href="/topTracks">
-                <Button className={userStyles.buttonMain}>See more</Button>
+                <a className={userStyles.buttonMain}>See more</a>
                 </Link>
               </div>
               <ul
@@ -87,7 +87,7 @@ const User = (props) => {
               <div className={userStyles.topHeadline}>
                 <h3>Top Artists of All Time</h3>{" "}
                 <Link href="/topArtists">
-                <Button className={userStyles.buttonMain}>See more</Button>
+                <a className={userStyles.buttonMain}>See more</a>
                 </Link>
               </div>
               <ul
