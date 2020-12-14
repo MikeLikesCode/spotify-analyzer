@@ -50,7 +50,7 @@ const User = (props) => {
                     <p className={userStyles.underText}>Playlist</p>
                   </div>
                 </div>
-                <Button onClick={logout()}className={userStyles.buttonLogout}>Logout</Button>
+                <Button onClick={logout}className={userStyles.buttonLogout}>Logout</Button>
               </div>
             </div>
           </div>
