@@ -105,7 +105,19 @@ button:focus, [type="submit"]:focus {
   cursor: pointer;
 }
 
+.btn-primary {
+  color: #fff;
+  background-color:rgb(29, 185, 84);
+  border-color:rgb(29, 185, 84);
+}
+
 .btn-primary:hover {
+  color: #fff;
+  background-color:rgb(29, 185, 84);
+  border-color:rgb(29, 185, 84);
+}
+
+.btn-primary::after{
   color: #fff;
   background-color:rgb(29, 185, 84);
   border-color:rgb(29, 185, 84);
