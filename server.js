@@ -605,6 +605,7 @@ if (!dev && cluster.isMaster) {
       server.listen(port, (err) => {
         if (err) throw err;
         console.log(`Listening on http://localhost:${port}`);
+        console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
       });
     });
 }
