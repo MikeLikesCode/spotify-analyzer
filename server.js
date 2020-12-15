@@ -14,7 +14,7 @@ require('dotenv').config()
 const axios = require('axios');
 
 const dev = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // Multi-process to utilize all CPU cores.
 if (!dev && cluster.isMaster) {
