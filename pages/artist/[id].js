@@ -122,7 +122,7 @@ class artistPage extends Component{
              <li key={i} className={artistStyles.relatedItem}>
                  <Link className="mainLink" href={`/artist/${artist.id}`} >
                 <div>
-             <Image key={artist.images[0].url} className={artistStyles.Image} src={artist.images[0].url} width={120} height={120}/>
+             <Image key={(artist.images ? artist.images[0].url : null)} className={artistStyles.Image} src={(artist.images ? artist.images[0].url : null)} width={120} height={120}/>
              <p>{artist.name}</p>
              </div>
              </Link>
