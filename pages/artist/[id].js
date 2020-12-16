@@ -82,7 +82,7 @@ class artistPage extends Component{
         <div style={{display:'flex', justifyContent:'center', textAlign:'center', marginTop:'5vh'}}>
             <div>
             <div style={{marginBottom:'2vh'}}>
-         <Image key={this.props.data.artist.images[0].url} className={artistStyles.Image} src={this.props.data.artist.images[0].url} width={190} height={190}/>
+         <Image key={(this.props.data.artist.images ? this.props.data.artist.images[0].url : 'null')} className={artistStyles.Image} src={( this.props.data.artist.images ? this.props.data.artist.images[0].url : 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-PNG-Icon.png')} width={190} height={190}/>
          <h1 style={{marginTop:'1vh',fontSize:'3rem'}}>{this.props.data.artist.name}</h1>   
          <div style={{margin:'15px 0px'}}>
       <GreenButton onClick={this.handleFollowed}>{this.state.isFollowing ? "Following" : "Follow"}</GreenButton>
