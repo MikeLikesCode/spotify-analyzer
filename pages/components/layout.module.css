@@ -6,7 +6,8 @@
 }
 @media only screen and (max-width:600px){
     .Container{
+          width:95%;
           margin: 0 auto;
-          padding: 3rem 2rem !important;
+          padding: 3rem 1rem !important;
     }
   }
