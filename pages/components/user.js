@@ -22,7 +22,8 @@ const User = (props) => {
                   height={130}
                 />
               </div>
-              <div>
+              <div style={{display:'flex',justifyContent:'center'}}>
+                <div>
                 <h1 className={userStyles.displayName}>
                   {props.data.profile.display_name}
                 </h1>
@@ -53,7 +54,7 @@ const User = (props) => {
               </div>
             </div>
           </div>
-
+          </div>
           <div className={userStyles.topContainer}>
             <div className={userStyles.topCol}>
               <div className={userStyles.topHeadline}>

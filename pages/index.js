@@ -1,13 +1,15 @@
 import { parseCookies } from "./api/parseCookies";
+import cookies from 'next-cookies'
 import { getProfile, getTracks, getArtist, getFollowed, getPlaylist} from "./api/spotify"
 import Login from "./components/login";
 import Layout from "./components/layout";
 import User from "./components/user";
 
-const Index = ({ refresh_token, data }) => {
+const Index = ({refresh_token,data}) => {
+  console.log(refresh_token)
   return (
     <>
-      {refresh_token == null ? (
+      {!refresh_token ? (
         <Login />
       ) : (
         <Layout>
@@ -18,38 +20,33 @@ const Index = ({ refresh_token, data }) => {
   );
 };
 
-export async function getServerSideProps({ req }) {
-  const cookies = parseCookies(req);
-  let { refresh_token_v2 } = cookies;
+export async function getServerSideProps (ctx) {
+ 
+  const cookie = cookies(ctx).refresh_token_v2;
+  console.log(JSON.stringify(cookie))
+  let refresh_token_v2  = cookie;
   let data = null;
 
-  if (refresh_token_v2) {
-
-    const profileJson = await getProfile(refresh_token_v2);
-    const tracksJson = await getTracks(refresh_token_v2);
-    const artistJson = await getArtist(refresh_token_v2);
-    const followedJson = await getFollowed(refresh_token_v2);
-    const playlistJson = await getPlaylist(refresh_token_v2);
-
-
+  if(refresh_token_v2){
     data = {
-      profile: profileJson,
-      tracks:  tracksJson,
+      profile: await getProfile(refresh_token_v2),
+      tracks:  await getTracks(refresh_token_v2),
       artists: {
-        long_term: artistJson,
-        following: followedJson,
+        long_term: await getArtist(refresh_token_v2),
+        following: await getFollowed(refresh_token_v2),
       },
-      playlist: playlistJson,
+      playlist: await getPlaylist(refresh_token_v2),
     };
-  } else {
-    data = null;
+  }else{
     refresh_token_v2 = null;
+    data = null;
   }
+  
   return {
-    props: {
+    props:{
       refresh_token: refresh_token_v2,
-      data: data,
-    },
+      data: await data,
+    }
   };
 }
 export default Index;

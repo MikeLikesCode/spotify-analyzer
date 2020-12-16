@@ -48,18 +48,11 @@ const Recent = ({ refresh_token, data }) => {
 export async function getServerSideProps({ req }) {
   const cookies = parseCookies(req);
   let { refresh_token_v2 } = cookies;
-  let json = null;
 
-  if (refresh_token_v2) {
-    json = await history(refresh_token_v2);
-  } else {
-    json = null;
-    refresh_token_v2 = null;
-  }
   return {
     props: {
       refresh_token: refresh_token_v2,
-      data: json,
+      data: await history(refresh_token_v2),
     },
   };
 }

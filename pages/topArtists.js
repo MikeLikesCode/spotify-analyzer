@@ -101,27 +101,13 @@ setActiveRange = range => this.changeRange(range);
 export async function getServerSideProps({ req }) {
   const cookies = parseCookies(req);
   let { refresh_token_v2 } = cookies;
-  let ltRes = null;
-  let stRes = null;
-  let mdRes = null;
 
-  if (refresh_token_v2) {
-     ltRes = await longTermArtist(refresh_token_v2);
-     stRes = await shortTermArtist(refresh_token_v2);
-     mdRes = await mediumTermArtist(refresh_token_v2);
-
-  } else {
-    ltRes = null;
-    stRes = null;
-    mdRes = null;
-    refresh_token_v2 = null;
-  }
   return {
     props: {
       refresh_token: refresh_token_v2,
-      long_term: ltRes,
-      medium_term: mdRes,
-      short_term: stRes,
+      long_term: await longTermArtist(refresh_token_v2),
+      medium_term: await shortTermArtist(refresh_token_v2),
+      short_term: await mediumTermArtist(refresh_token_v2),
     },
   };
 }

@@ -144,18 +144,11 @@ export async function getServerSideProps({ req, params }) {
   const cookies = parseCookies(req);
   let { refresh_token_v2 } = cookies;
   let data = null;
-  let id = null;
   if (refresh_token_v2) {
-    id = params.id;
-
-    const trackJson = await artistData(refresh_token_v2,id);
-    const relatedJson = await relatedData(refresh_token_v2,id);
-    const followingJson = await followedData(refresh_token_v2,id);
-
     data = {
-      artist : trackJson,
-      related : relatedJson,
-      following : followingJson
+      artist : await artistData(refresh_token_v2,params.id),
+      related : await relatedData(refresh_token_v2,params.id),
+      following : await followedData(refresh_token_v2,params.id)
     };
   } else {
     data = null;
