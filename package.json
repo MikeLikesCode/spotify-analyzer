@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node index.js",
-    "vercel-build": "yarn build && cross-env NODE_ENV=production node index.js"
+    "start": "cross-env NODE_ENV=production node /api/index.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
