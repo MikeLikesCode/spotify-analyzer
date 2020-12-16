@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
 const axios = require('axios');
 
 const dev = process.env.NODE_ENV !== 'production';
