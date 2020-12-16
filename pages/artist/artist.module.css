@@ -7,6 +7,10 @@
     width:20%;
 }
 
+.relatedItem:hover{
+    cursor: pointer;
+}
+
 @media only screen and (max-width:600px){
     .relatedItem{
         width:100%;
