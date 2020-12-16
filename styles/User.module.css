@@ -31,7 +31,6 @@
 .buttonLogout{
     background: transparent;
     border: 2px solid white;
-    margin-left: 15px;
     border-radius: 50px;
     padding: 6px 24px;
     font-size: 12px;
@@ -80,8 +79,9 @@
 .userStats{
     display: flex;
     align-items: center;
-    margin-top: 18px;
+    margin-top: 2vh;
     justify-content: center;
+    margin-bottom: 3vh;
 }
 
 .userNumbers{
