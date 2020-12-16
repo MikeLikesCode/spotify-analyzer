@@ -68,7 +68,7 @@ setActiveRange = range => this.changeRange(range);
           </RangeButton>
         </div>
         </div>
-        <ul className={ArtistStyles.artistList} style={{marginTop:'5vh',display: 'flex', flexWrap: 'wrap',listStyle: 'none', padding:'0', minWidth:'419px'}}>
+        <ul className={ArtistStyles.artistList} style={{marginTop:'5vh',display: 'flex', flexWrap: 'wrap',listStyle: 'none', padding:'0'}}>
         {artistsData ? (
          
           artistsData.items.map(({id,images,name}, i) => (

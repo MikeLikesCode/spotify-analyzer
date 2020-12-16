@@ -69,7 +69,7 @@ setActiveRange = range => this.changeRange(range);
         </div>
         </div>
 
-        <ul style={{listStyle:'none', padding:0, minWidth:'419px'}}>
+        <ul style={{listStyle:'none', padding:0}}>
         {tracksData ? (
           tracksData.items.map((track,i) => (
             <div key={i}>
