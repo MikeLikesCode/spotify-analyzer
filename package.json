@@ -1,6 +1,9 @@
 {
   "name": "spotify-analyzer",
   "version": "0.1.0",
+    "engines": {
+    "node": "12.16.x"
+  },
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development node index.js",
